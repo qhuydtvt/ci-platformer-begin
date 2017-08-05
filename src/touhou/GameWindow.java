@@ -37,9 +37,10 @@ public class GameWindow extends Frame {
     InputManager inputManager = new InputManager();
 
     public GameWindow() {
+        pack();
         background = SpriteUtils.loadImage("assets/images/background/0.png");
         player.inputManager = this.inputManager;
-        player.constraints = new Constraints(0, 768, 0, 384);
+        player.constraints = new Constraints(getInsets().top, 768, getInsets().left, 384);
         player.playerSpells = this.playerSpells;
         setupGameLoop();
         setupWindow();
@@ -87,10 +88,10 @@ public class GameWindow extends Frame {
     public void loop() {
         while(true) {
             if (lastTimeUpdate == -1) {
-                lastTimeUpdate = System.currentTimeMillis();
+                lastTimeUpdate = System.nanoTime();
             }
-            currentTime = System.currentTimeMillis();
-            if (currentTime - lastTimeUpdate > 17) {
+            currentTime = System.nanoTime();
+            if (currentTime - lastTimeUpdate > 17000000) {
                 run();
                 render();
                 lastTimeUpdate = currentTime;

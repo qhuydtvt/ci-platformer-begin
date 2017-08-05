@@ -3,6 +3,7 @@ package touhou.players;
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
 import touhou.bases.Vector2D;
+import touhou.bases.renderers.ImageRenderer;
 import touhou.inputs.InputManager;
 
 import java.awt.*;
@@ -15,14 +16,15 @@ import java.util.ArrayList;
 public class Player {
     private static final int SPEED = 5;
     public Vector2D position;
-    public BufferedImage image;
     public InputManager inputManager;
     public Constraints constraints;
     public ArrayList<PlayerSpell> playerSpells;
+    public ImageRenderer renderer;
 
     public Player() {
         position = new Vector2D(384/2, 600);
-        image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        renderer = new ImageRenderer(image);
     }
 
     public void run() {
@@ -51,6 +53,6 @@ public class Player {
     }
 
     public void render(Graphics2D g2d) {
-        g2d.drawImage(image, (int)(position.x - image.getWidth() / 2), (int)(position.y - image.getHeight() / 2), null);
+        renderer.render(g2d, position);
     }
 }
