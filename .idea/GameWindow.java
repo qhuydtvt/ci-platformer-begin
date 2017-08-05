@@ -39,8 +39,8 @@ public class GameWindow extends Frame {
     public GameWindow() {
         pack();
         background = SpriteUtils.loadImage("assets/images/background/0.png");
-        player.setInputManager(this.inputManager);
-        player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
+        player.inputManager = this.inputManager;
+        player.constraints = new Constraints(getInsets().top, 768, getInsets().left, 384);
         player.playerSpells = this.playerSpells;
         setupGameLoop();
         setupWindow();
