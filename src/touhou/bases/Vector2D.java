@@ -30,10 +30,6 @@ public class Vector2D {
         set(other.x, other.y);
     }
 
-//    public Vector2D clone() {
-//
-//    }
-
     public void addUp(Vector2D other) {
         addUp(other.x, other.y);
     }
@@ -48,10 +44,6 @@ public class Vector2D {
     }
 
     public Vector2D add(float dx, float dy) {
-//        Vector2D newVector = new Vector2D();
-//        newVector.x = this.x + dx;
-//        newVector.y = this.y + dy;
-//        return newVector;
         return new Vector2D(this.x + dx, this.y + dy);
     }
 

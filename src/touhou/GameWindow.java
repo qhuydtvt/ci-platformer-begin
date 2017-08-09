@@ -2,6 +2,8 @@ package touhou;
 
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
+import touhou.bases.FrameCounter;
+import touhou.enemies.Enemy;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
 import touhou.players.PlayerSpell;
@@ -13,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -34,14 +37,26 @@ public class GameWindow extends Frame {
 
     Player player = new Player();
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
+
+    ArrayList<Enemy> enemies = new ArrayList<>();
+    FrameCounter enemySpawnCounter = new FrameCounter(70);
+
     InputManager inputManager = new InputManager();
 
     public GameWindow() {
         pack();
         background = SpriteUtils.loadImage("assets/images/background/0.png");
+
         player.setInputManager(this.inputManager);
         player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
         player.playerSpells = this.playerSpells;
+
+//        enemies.add(new Enemy());
+        Enemy enemy = new Enemy();
+        enemy.getPosition().set(40, 40);
+
+        enemies.add(enemy);
+
         setupGameLoop();
         setupWindow();
     }
@@ -105,6 +120,22 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell : playerSpells) {
             playerSpell.run();
         }
+
+        for (Enemy enemy : enemies) {
+            enemy.run();
+        }
+
+        if (enemySpawnCounter.run()) {
+            enemySpawnCounter.reset();
+            Enemy enemy = new Enemy();
+
+            Random random = new Random();
+
+            int x = random.nextInt(384);
+
+            enemy.getPosition().set(x, 40);
+            enemies.add(enemy);
+        }
     }
 
     private void render() {
@@ -115,6 +146,10 @@ public class GameWindow extends Frame {
 
         for (PlayerSpell playerSpell: playerSpells) {
             playerSpell.render(backbufferGraphics);
+        }
+
+        for(Enemy enemy : enemies) {
+            enemy.render(backbufferGraphics);
         }
 
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
