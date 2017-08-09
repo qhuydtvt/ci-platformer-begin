@@ -4,6 +4,7 @@ import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
 import touhou.bases.FrameCounter;
 import touhou.enemies.Enemy;
+import touhou.enemies.EnemySpawner;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
 import touhou.players.PlayerSpell;
@@ -39,7 +40,7 @@ public class GameWindow extends Frame {
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
 
     ArrayList<Enemy> enemies = new ArrayList<>();
-    FrameCounter enemySpawnCounter = new FrameCounter(70);
+    EnemySpawner enemySpawner = new EnemySpawner();
 
     InputManager inputManager = new InputManager();
 
@@ -125,20 +126,11 @@ public class GameWindow extends Frame {
             enemy.run();
         }
 
-        if (enemySpawnCounter.run()) {
-            enemySpawnCounter.reset();
-            Enemy enemy = new Enemy();
-
-            Random random = new Random();
-
-            int x = random.nextInt(384);
-
-            enemy.getPosition().set(x, 40);
-            enemies.add(enemy);
-        }
+        enemySpawner.spawn(enemies);
     }
 
-    private void render() {
+    @Override
+    public void update(Graphics g) {
         backbufferGraphics.setColor(Color.black);
         backbufferGraphics.fillRect(0, 0, 1024, 768);
         backbufferGraphics.drawImage(background, 0, 0, null);
@@ -152,6 +144,10 @@ public class GameWindow extends Frame {
             enemy.render(backbufferGraphics);
         }
 
-        windowGraphics.drawImage(backbufferImage, 0, 0, null);
+        g.drawImage(backbufferImage, 0, 0, null);
+    }
+
+    private void render() {
+        repaint();
     }
 }
