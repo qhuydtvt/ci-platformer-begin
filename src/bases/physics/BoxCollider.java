@@ -1,17 +1,18 @@
 package bases.physics;
 
+import bases.GameObject;
 import bases.Vector2D;
 
 /**
  * Created by huynq on 8/12/17.
  */
-public class BoxCollider {
-    private Vector2D position;
+public class BoxCollider extends GameObject {
     private float width;
     private float height;
 
     public BoxCollider(float x, float y, float width, float height) {
-        this.position = new Vector2D(x, y);
+        super();
+        this.position.set(x, y);
         this.width = width;
         this.height = height;
     }
@@ -41,5 +42,14 @@ public class BoxCollider {
                 this.top() <= other.bottom() &&
                 this.right() >= other.left() &&
                 this.left() <= other.right();
+    }
+
+    @Override
+    public String toString() {
+        return "BoxCollider{" +
+                "width=" + width +
+                ", height=" + height +
+                ", position=" + position +
+                '}';
     }
 }

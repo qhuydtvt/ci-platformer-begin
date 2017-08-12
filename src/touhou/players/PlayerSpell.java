@@ -20,7 +20,8 @@ public class PlayerSpell extends GameObject {
         ));
     }
 
-    public void run() {
+    public void run(Vector2D parentPosition) {
+        super.run(parentPosition);
         position.addUp(0, -10);
     }
 }

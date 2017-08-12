@@ -19,8 +19,8 @@ public class Enemy extends GameObject {
     }
 
     // Controller
-    public void run() {
-        super.run();
+    public void run(Vector2D parentPosition) {
+        super.run(parentPosition);
         fly();
         shoot();
     }
