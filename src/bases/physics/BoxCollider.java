@@ -22,19 +22,19 @@ public class BoxCollider extends GameObject {
     }
 
     public float left() {
-        return this.position.x - this.width / 2;
+        return this.screenPosition.x - this.width / 2;
     }
 
     public float right() {
-        return this.position.x + this.width / 2;
+        return this.screenPosition.x + this.width / 2;
     }
 
     public float top() {
-        return this.position.y - this.height / 2;
+        return this.screenPosition.y - this.height / 2;
     }
 
     public float bottom() {
-        return this.position.y + this.height / 2;
+        return this.screenPosition.y + this.height / 2;
     }
 
     public boolean intersects(BoxCollider other) {
@@ -49,7 +49,7 @@ public class BoxCollider extends GameObject {
         return "BoxCollider{" +
                 "width=" + width +
                 ", height=" + height +
-                ", position=" + position +
+                ", screenPosition=" + screenPosition +
                 '}';
     }
 }
