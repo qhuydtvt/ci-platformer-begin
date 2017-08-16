@@ -3,11 +3,14 @@ package touhou.enemies;
 import bases.GameObject;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicsBody;
+import bases.renderers.Animation;
 import tklibs.SpriteUtils;
 import bases.Vector2D;
 import bases.renderers.ImageRenderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Created by huynq on 8/9/17.
@@ -18,8 +21,15 @@ public class Enemy extends GameObject implements PhysicsBody {
 
     public Enemy() {
         super();
-        renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png"));
-        boxCollider = new BoxCollider(20, 20);
+
+        renderer = new Animation(
+                SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png"),
+                SpriteUtils.loadImage("assets/images/enemies/level0/blue/1.png"),
+                SpriteUtils.loadImage("assets/images/enemies/level0/blue/2.png"),
+                SpriteUtils.loadImage("assets/images/enemies/level0/blue/3.png")
+        );
+
+        this.boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
     }
 

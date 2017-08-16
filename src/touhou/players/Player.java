@@ -27,7 +27,7 @@ public class Player extends GameObject {
         super();
         this.spellLock = false;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
-        this.coolDownCounter = new FrameCounter(3);
+        this.coolDownCounter = new FrameCounter(1);
     }
 
     public void setContraints(Constraints contraints) {

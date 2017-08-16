@@ -3,6 +3,7 @@ package bases;
 import bases.physics.Physics;
 import bases.physics.PhysicsBody;
 import bases.renderers.ImageRenderer;
+import bases.renderers.Renderer;
 import touhou.players.PlayerSpell;
 
 import java.awt.*;
@@ -15,7 +16,9 @@ import java.util.Vector;
 public class GameObject {
     protected Vector2D position;
     protected Vector2D screenPosition;
-    protected ImageRenderer renderer;
+
+    protected Renderer renderer;
+
     protected ArrayList<GameObject> children;
     protected boolean isActive;
 
@@ -93,14 +96,12 @@ public class GameObject {
             this.position = position;
     }
 
-    public ImageRenderer getRenderer() {
+    public Renderer getRenderer() {
         return renderer;
     }
 
-    public void setRenderer(ImageRenderer renderer) {
+    public void setRenderer(Renderer renderer) {
         if (renderer != null)
             this.renderer = renderer;
     }
-
-
 }

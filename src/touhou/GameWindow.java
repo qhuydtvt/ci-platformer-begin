@@ -120,6 +120,7 @@ public class GameWindow extends Frame {
 
         GameObject.renderAll(backbufferGraphics);
 
+
         repaint(); // ask to repaint
     }
 }
