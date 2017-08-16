@@ -2,6 +2,7 @@ package touhou.players;
 
 import bases.GameObject;
 import bases.Vector2D;
+import bases.pools.GameObjectPool;
 import tklibs.SpriteUtils;
 import bases.Constraints;
 import bases.FrameCounter;
@@ -54,9 +55,8 @@ public class Player extends GameObject {
 
     private void castSpell() {
         if (inputManager.xPressed && !spellLock) {
-            PlayerSpell newSpell = new PlayerSpell();
+            PlayerSpell newSpell = GameObjectPool.recycle(PlayerSpell.class);
             newSpell.getPosition().set(this.position.add(0, -30));
-            GameObject.add(newSpell);
 
             spellLock = true;
             coolDownCounter.reset();
