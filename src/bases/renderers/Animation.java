@@ -19,26 +19,29 @@ public class Animation implements Renderer {
     private boolean oneTime;
     private boolean stopped;
 
-    public Animation(int frameDelay, boolean reserve, BufferedImage... images) {
+    public Animation(int frameDelay, boolean oneTime, boolean reserve, BufferedImage... images) {
         this.images = Arrays.asList(images);
         this.frameCounter = new FrameCounter(frameDelay);
         this.currentImageIndex = 0;
+        this.oneTime = oneTime;
         this.reverse = reserve;
     }
 
     public Animation(BufferedImage... images) {
-        this(12, false, images);
+        this(12, false, false, images);
     }
 
     @Override
     public void render(Graphics2D g2d, Vector2D position) {
-        BufferedImage image = images.get(currentImageIndex);
-        Vector2D renderPosition = position.subtract(
-                image.getWidth() / 2,
-                image.getHeight() / 2
-        );
+        if (!stopped) {
+            BufferedImage image = images.get(currentImageIndex);
+            Vector2D renderPosition = position.subtract(
+                    image.getWidth() / 2,
+                    image.getHeight() / 2
+            );
 
-        g2d.drawImage(image, (int) renderPosition.x, (int) renderPosition.y, null);
+            g2d.drawImage(image, (int) renderPosition.x, (int) renderPosition.y, null);
+        }
 
         updateCurrentImage();
     }
@@ -47,22 +50,38 @@ public class Animation implements Renderer {
         this.reverse = reverse;
     }
 
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    public void reset() {
+        stopped = false;
+        currentImageIndex = 0;
+    }
+
     private void updateCurrentImage() {
         if (frameCounter.run()) {
             frameCounter.reset();
             if (!reverse) {
                 currentImageIndex++;
                 if (currentImageIndex >= images.size()) {
-                    if(!oneTime) {
+                    // Out of range
+                    if (!oneTime) {
+                        // Repeat animation
                         currentImageIndex = 0;
+                    } else {
+                        stopped = true;
                     }
-
                 }
             } else {
                 currentImageIndex--;
                 if (currentImageIndex < 0) {
+                    // Out of range
                     if (!oneTime) {
+                        // Repeat animation
                         currentImageIndex = images.size() - 1;
+                    } else {
+                        stopped = true;
                     }
                 }
             }

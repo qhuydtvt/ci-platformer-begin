@@ -15,6 +15,7 @@ import touhou.enemies.Enemy;
 public class PlayerSpell extends GameObject implements PhysicsBody {
 
     private BoxCollider boxCollider;
+    private int damage = 1;
 
     public PlayerSpell() {
         super();
@@ -45,7 +46,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
 
         if (enemy != null) {
-            enemy.setActive(false);
+            enemy.getHit(damage);
             this.isActive = false;
         }
     }

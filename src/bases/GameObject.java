@@ -21,6 +21,7 @@ public class GameObject {
 
     protected ArrayList<GameObject> children;
     protected boolean isActive;
+    protected boolean isRenewing;
 
     private static Vector<GameObject> gameObjects = new Vector<>();
     private static Vector<GameObject> newGameObjects = new Vector<>();
@@ -44,7 +45,7 @@ public class GameObject {
 
     public static void renderAll(Graphics2D g2d) {
         for (GameObject gameObject : gameObjects) {
-            if (gameObject.isActive)
+            if (gameObject.isActive && !gameObject.isRenewing)
                 gameObject.render(g2d);
         }
     }
@@ -62,6 +63,7 @@ public class GameObject {
 
     public void run(Vector2D parentPosition) {
         screenPosition = parentPosition.add(position);
+        isRenewing = false;
         for (GameObject child: children) {
             if (child.isActive)
                 child.run(screenPosition);
@@ -91,9 +93,18 @@ public class GameObject {
         return position;
     }
 
+    public Vector2D getScreenPosition() {
+        return screenPosition;
+    }
+
     public void setPosition(Vector2D position) {
         if (position != null)
             this.position = position;
+    }
+
+    public void reset() {
+        this.isActive = true;
+        this.isRenewing = true;
     }
 
     public Renderer getRenderer() {

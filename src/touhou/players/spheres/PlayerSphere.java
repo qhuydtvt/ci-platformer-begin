@@ -16,6 +16,7 @@ public class PlayerSphere extends GameObject {
         this.animation = new Animation(
                 7,
                 false,
+                false,
                 SpriteUtils.loadImage("assets/images/sphere/0.png"),
                 SpriteUtils.loadImage("assets/images/sphere/1.png"),
                 SpriteUtils.loadImage("assets/images/sphere/2.png"),
