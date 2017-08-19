@@ -4,28 +4,41 @@ import bases.Constraints;
 import bases.GameObject;
 import tklibs.SpriteUtils;
 import touhou.enemies.EnemySpawner;
+import touhou.inputs.InputManager;
 import touhou.players.Player;
+import touhou.settings.Settings;
 
-import java.awt.image.BufferedImage;
 
 /**
  * Created by huynq on 8/19/17.
  */
 public class Level1Scene {
-    private BufferedImage background;
     Player player = new Player();
     EnemySpawner enemySpawner = new EnemySpawner(); // TODO: Viec cua lop: sua thanh game object
 
+    Settings settings = Settings.instance;
+
     public void init() {
-        background = SpriteUtils.loadImage("assets/images/background/0.png");
+        addBackground();
         addPlayer();
     }
 
-    private void addPlayer() {
-//        player.setInputManager(this.inputManager);
-//        player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
-//        player.getPosition().set(384 / 2, 580);
+    private void addBackground() {
+        GameObject.add(new Background());
+    }
 
-        //GameObject.add(player);
+    private void addPlayer() {
+        player.setInputManager(InputManager.instance);
+        player.setContraints(new Constraints(
+                settings.getWindowInsets().top,
+                settings.getGamePlayHeight(),
+                settings.getWindowInsets().left,
+                settings.getGamePlayWidth())
+        );
+        player.getPosition().set(
+                settings.getGamePlayWidth() / 2,
+                settings.getGamePlayHeight() * 3 / 4);
+
+        GameObject.add(player);
     }
 }

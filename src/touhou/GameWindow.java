@@ -6,6 +6,8 @@ import bases.Constraints;
 import touhou.enemies.EnemySpawner;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
+import touhou.scenes.Level1Scene;
+import touhou.settings.Settings;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,8 +16,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
-
-//https://github.com/qhuydtvt/ci1-huynq
 
 /**
  * Created by huynq on 7/29/17.
@@ -30,12 +30,20 @@ public class GameWindow extends Frame {
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
 
-    InputManager inputManager = new InputManager();
+    InputManager inputManager = InputManager.instance;
+
+    Level1Scene level1Scene;
 
     public GameWindow() {
         pack();
         setupGameLoop();
         setupWindow();
+        setupLevel();
+    }
+
+    private void setupLevel() {
+        level1Scene = new Level1Scene();
+        level1Scene.init();
     }
 
     private void setupGameLoop() {
@@ -43,7 +51,7 @@ public class GameWindow extends Frame {
     }
 
     private void setupWindow() {
-        this.setSize(1024, 768);
+        this.setSize(Settings.instance.getWindowWidth(), Settings.instance.getWindowHeight());
 
         this.setTitle("Touhou - Remade by QHuyDTVT");
         this.setVisible(true);
@@ -79,6 +87,8 @@ public class GameWindow extends Frame {
                 inputManager.keyReleased(e);
             }
         });
+
+        Settings.instance.setWindowInsets(this.getInsets());
     }
 
     public void loop() {
