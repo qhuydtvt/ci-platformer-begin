@@ -27,4 +27,8 @@ public class Physics {
     public static void add(PhysicsBody body) {
         bodies.add(body);
     }
+
+    public static void clearAll() {
+        bodies.clear();
+    }
 }

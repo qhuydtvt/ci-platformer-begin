@@ -30,27 +30,12 @@ public class GameWindow extends Frame {
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
 
-    private BufferedImage background;
-
-    Player player = new Player();
-    EnemySpawner enemySpawner = new EnemySpawner(); // TODO: Viec cua lop: sua thanh game object
-
     InputManager inputManager = new InputManager();
 
     public GameWindow() {
         pack();
-        background = SpriteUtils.loadImage("assets/images/background/0.png");
-        addPlayer();
         setupGameLoop();
         setupWindow();
-    }
-
-    private void addPlayer() {
-        player.setInputManager(this.inputManager);
-        player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
-        player.getPosition().set(384 / 2, 580);
-
-        GameObject.add(player);
     }
 
     private void setupGameLoop() {
@@ -70,7 +55,6 @@ public class GameWindow extends Frame {
         Graphics2D backgroundGraphics = (Graphics2D) this.blackBackground.getGraphics();
         backgroundGraphics.setColor(Color.BLACK);
         backgroundGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -115,17 +99,11 @@ public class GameWindow extends Frame {
 
     private void run() {
         GameObject.runAll();
-        enemySpawner.spawn();
     }
 
     private void render() {
-
         backbufferGraphics.drawImage(blackBackground, 0, 0, null);
-        backbufferGraphics.drawImage(background, 0, 0, null);
-
         GameObject.renderAll(backbufferGraphics);
-
-
         getGraphics().drawImage(backbufferImage, 0, 0, null);
     }
 }

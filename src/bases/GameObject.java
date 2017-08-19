@@ -2,6 +2,7 @@ package bases;
 
 import bases.physics.Physics;
 import bases.physics.PhysicsBody;
+import bases.pools.GameObjectPool;
 import bases.renderers.ImageRenderer;
 import bases.renderers.Renderer;
 import touhou.players.PlayerSpell;
@@ -48,6 +49,13 @@ public class GameObject {
             if (gameObject.isActive && !gameObject.isRenewing)
                 gameObject.render(g2d);
         }
+    }
+
+    public static void clearAll() {
+        gameObjects.clear();
+        newGameObjects.clear();
+        Physics.clearAll();
+        GameObjectPool.clearAll();
     }
 
     public static void add(GameObject gameObject) {
