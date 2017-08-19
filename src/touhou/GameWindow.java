@@ -25,6 +25,8 @@ public class GameWindow extends Frame {
     private long lastTimeUpdate;
     private long currentTime;
 
+    private BufferedImage blackBackground;
+
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
 
@@ -64,6 +66,12 @@ public class GameWindow extends Frame {
         this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         this.backbufferGraphics = (Graphics2D) this.backbufferImage.getGraphics();
 
+        this.blackBackground = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D backgroundGraphics = (Graphics2D) this.blackBackground.getGraphics();
+        backgroundGraphics.setColor(Color.BLACK);
+        backgroundGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -71,6 +79,7 @@ public class GameWindow extends Frame {
             }
         });
         this.addKeyListener(new KeyListener() {
+
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -93,7 +102,9 @@ public class GameWindow extends Frame {
             if (lastTimeUpdate == -1) {
                 lastTimeUpdate = System.nanoTime();
             }
+
             currentTime = System.nanoTime();
+
             if (currentTime - lastTimeUpdate > 17000000) {
                 run();
                 render();
@@ -107,20 +118,14 @@ public class GameWindow extends Frame {
         enemySpawner.spawn();
     }
 
-    @Override
-    public void update(Graphics g) {
-        g.drawImage(backbufferImage, 0, 0, null);
-    }
-
     private void render() {
 
-        backbufferGraphics.setColor(Color.black);
-        backbufferGraphics.fillRect(0, 0, 1024, 768);
+        backbufferGraphics.drawImage(blackBackground, 0, 0, null);
         backbufferGraphics.drawImage(background, 0, 0, null);
 
         GameObject.renderAll(backbufferGraphics);
 
 
-        repaint(); // ask to repaint
+        getGraphics().drawImage(backbufferImage, 0, 0, null);
     }
 }

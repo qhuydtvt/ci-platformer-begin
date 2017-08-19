@@ -15,15 +15,19 @@ public class Animation implements Renderer {
     private List<BufferedImage> images;
     private FrameCounter frameCounter;
     private int currentImageIndex;
+    private boolean reverse;
+    private boolean oneTime;
+    private boolean stopped;
 
-    public Animation(int frameDelay, BufferedImage... images) {
+    public Animation(int frameDelay, boolean reserve, BufferedImage... images) {
         this.images = Arrays.asList(images);
         this.frameCounter = new FrameCounter(frameDelay);
         this.currentImageIndex = 0;
+        this.reverse = reserve;
     }
 
     public Animation(BufferedImage... images) {
-        this(12, images);
+        this(12, false, images);
     }
 
     @Override
@@ -34,13 +38,33 @@ public class Animation implements Renderer {
                 image.getHeight() / 2
         );
 
-        g2d.drawImage(image, (int)renderPosition.x, (int)renderPosition.y, null);
+        g2d.drawImage(image, (int) renderPosition.x, (int) renderPosition.y, null);
 
+        updateCurrentImage();
+    }
+
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+    }
+
+    private void updateCurrentImage() {
         if (frameCounter.run()) {
             frameCounter.reset();
-            currentImageIndex++;
-            if (currentImageIndex >= images.size()) {
-                currentImageIndex = 0;
+            if (!reverse) {
+                currentImageIndex++;
+                if (currentImageIndex >= images.size()) {
+                    if(!oneTime) {
+                        currentImageIndex = 0;
+                    }
+
+                }
+            } else {
+                currentImageIndex--;
+                if (currentImageIndex < 0) {
+                    if (!oneTime) {
+                        currentImageIndex = images.size() - 1;
+                    }
+                }
             }
         }
     }
