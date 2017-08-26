@@ -2,7 +2,6 @@ package touhou.scenes;
 
 import bases.Constraints;
 import bases.GameObject;
-import tklibs.SpriteUtils;
 import touhou.enemies.EnemySpawner;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
@@ -12,15 +11,20 @@ import touhou.settings.Settings;
 /**
  * Created by huynq on 8/19/17.
  */
-public class Level1Scene {
+public class Level1Scene extends Scene {
     Player player = new Player();
-    EnemySpawner enemySpawner = new EnemySpawner(); // TODO: Viec cua lop: sua thanh game object
 
     Settings settings = Settings.instance;
 
+    @Override
     public void init() {
         addBackground();
         addPlayer();
+        addEnemySpawner();
+    }
+
+    private void addEnemySpawner() {
+        GameObject.add(new EnemySpawner());
     }
 
     private void addBackground() {
@@ -35,6 +39,7 @@ public class Level1Scene {
                 settings.getWindowInsets().left,
                 settings.getGamePlayWidth())
         );
+
         player.getPosition().set(
                 settings.getGamePlayWidth() / 2,
                 settings.getGamePlayHeight() * 3 / 4);

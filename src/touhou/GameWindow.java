@@ -7,6 +7,7 @@ import touhou.enemies.EnemySpawner;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
 import touhou.scenes.Level1Scene;
+import touhou.scenes.SceneManager;
 import touhou.settings.Settings;
 
 import java.awt.*;
@@ -32,8 +33,6 @@ public class GameWindow extends Frame {
 
     InputManager inputManager = InputManager.instance;
 
-    Level1Scene level1Scene;
-
     public GameWindow() {
         pack();
         setupGameLoop();
@@ -42,8 +41,7 @@ public class GameWindow extends Frame {
     }
 
     private void setupLevel() {
-        level1Scene = new Level1Scene();
-        level1Scene.init();
+        SceneManager.changeScene(new Level1Scene());
     }
 
     private void setupGameLoop() {
@@ -102,6 +100,7 @@ public class GameWindow extends Frame {
             if (currentTime - lastTimeUpdate > 17000000) {
                 run();
                 render();
+                SceneManager.changeSceneIfNeeded();
                 lastTimeUpdate = currentTime;
             }
         }

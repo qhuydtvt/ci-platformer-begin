@@ -119,8 +119,9 @@ public class GameObject {
         return renderer;
     }
 
-    public void setRenderer(Renderer renderer) {
+    public GameObject setRenderer(Renderer renderer) {
         if (renderer != null)
             this.renderer = renderer;
+        return this;
     }
 }

@@ -8,6 +8,7 @@ import bases.renderers.Animation;
 import tklibs.SpriteUtils;
 import bases.Vector2D;
 import bases.renderers.ImageRenderer;
+import touhou.players.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class Enemy extends GameObject implements PhysicsBody {
     private static final float SPEED = 3;
     private BoxCollider boxCollider;
+    private int damage = 1;
 
     public Enemy() {
         super();
@@ -38,6 +40,14 @@ public class Enemy extends GameObject implements PhysicsBody {
         super.run(parentPosition);
         fly();
         shoot();
+        hitPlayer();
+    }
+
+    private void hitPlayer() {
+        Player player = Player.getInstance();
+        if (this.boxCollider.intersects(player.getBoxCollider())) {
+            player.getHit(damage);
+        }
     }
 
     private void shoot() {

@@ -1,6 +1,7 @@
 package bases.renderers;
 
 import bases.Vector2D;
+import tklibs.SpriteUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -27,5 +28,10 @@ public class ImageRenderer implements Renderer {
 
     public Vector2D getAnchor() {
         return anchor;
+    }
+
+    // Factory
+    public static ImageRenderer create(String url) {
+        return new ImageRenderer(SpriteUtils.loadImage(url));
     }
 }
