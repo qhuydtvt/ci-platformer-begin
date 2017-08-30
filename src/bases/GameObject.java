@@ -1,14 +1,14 @@
 package bases;
 
+import bases.actions.Action;
 import bases.physics.Physics;
 import bases.physics.PhysicsBody;
 import bases.pools.GameObjectPool;
-import bases.renderers.ImageRenderer;
 import bases.renderers.Renderer;
-import touhou.players.PlayerSpell;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -21,6 +21,8 @@ public class GameObject {
     protected Renderer renderer;
 
     protected ArrayList<GameObject> children;
+    protected ArrayList<Action> actions;
+    protected ArrayList<Action> newActions;
     protected boolean isActive;
     protected boolean isRenewing;
 
@@ -64,6 +66,9 @@ public class GameObject {
 
     public GameObject() {
         children = new ArrayList<>();
+        actions = new ArrayList<Action>();
+        newActions = new ArrayList<>();
+
         position = new Vector2D();
         screenPosition = new Vector2D();
         isActive = true;
@@ -113,6 +118,8 @@ public class GameObject {
     public void reset() {
         this.isActive = true;
         this.isRenewing = true;
+        this.actions.clear();
+        this.newActions.clear();
     }
 
     public Renderer getRenderer() {
@@ -123,5 +130,24 @@ public class GameObject {
         if (renderer != null)
             this.renderer = renderer;
         return this;
+    }
+
+    public static void runAllActions() {
+        for (GameObject gameObject: gameObjects) {
+            if (gameObject.isActive)
+                gameObject.runActions();
+        }
+    }
+
+    private void runActions() {
+
+        actions.removeIf(action -> action.run(this));
+
+        actions.addAll(newActions);
+        newActions.clear();
+    }
+
+    public void addAction(Action action) {
+        newActions.add(action);
     }
 }

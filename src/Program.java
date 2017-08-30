@@ -1,7 +1,3 @@
-import bases.GameObject;
-import bases.physics.BoxCollider;
-import touhou.GameWindow;
-import touhou.enemies.Enemy;
 
 
 /**

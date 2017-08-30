@@ -1,7 +1,6 @@
 package bases.pools;
 
 import bases.GameObject;
-import touhou.players.PlayerSpell;
 
 import java.util.Vector;
 

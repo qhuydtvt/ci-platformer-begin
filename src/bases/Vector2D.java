@@ -4,6 +4,11 @@ package bases;
  * Created by huynq on 8/2/17.
  */
 public class Vector2D {
+    public static final Vector2D ZERO = new Vector2D(0, 0);
+    public static final Vector2D ONE = new Vector2D(1, 1);
+
+    public static final Vector2D DOWN = new Vector2D(0, 1);
+
     public float x;
     public float y;
 
@@ -65,6 +70,16 @@ public class Vector2D {
 
     public float magnitude() {
         return (float)Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    public Vector2D rotate(float degree) {
+        double rad = Math.toRadians(degree);
+        double sinRad = Math.sin(rad);
+        double cosRad = Math.cos(rad);
+        return new Vector2D(
+                (float)(cosRad * x - sinRad * y),
+                (float)(sinRad * x + cosRad * y)
+        );
     }
 
     public Vector2D normalize() {
