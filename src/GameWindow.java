@@ -3,6 +3,8 @@ import bases.GameObject;
 import bases.inputs.InputManager;
 import bases.scenes.SceneManager;
 import bases.settings.Settings;
+import game.Platform;
+import game.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -34,7 +36,23 @@ public class GameWindow extends Frame {
     }
 
     private void setupLevel() {
+        // Add player
+        Player player = new Player();
+        player.getPosition().set(100, 50);
+        GameObject.add(player);
 
+        // Add platforms
+        for(int i = 0, platformX = 20; i < 20; i++, platformX += 30) {
+            Platform platform = new Platform();
+            platform.getPosition().set(platformX, 600);
+            GameObject.add(platform);
+        }
+
+        for(int i = 0, platformX = 270; i < 7; i++, platformX += 30) {
+            Platform platform = new Platform();
+            platform.getPosition().set(platformX, 500);
+            GameObject.add(platform);
+        }
     }
 
     private void setupGameLoop() {
