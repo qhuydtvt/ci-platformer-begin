@@ -48,9 +48,15 @@ public class GameWindow extends Frame {
             GameObject.add(platform);
         }
 
-        for(int i = 0, platformX = 270; i < 7; i++, platformX += 30) {
+        for(int i = 0, platformX = 350; i < 5; i++, platformX += 30) {
             Platform platform = new Platform();
             platform.getPosition().set(platformX, 500);
+            GameObject.add(platform);
+        }
+
+        for(int i = 0, platformY = 600; i < 3; i++, platformY -= 30) {
+            Platform platform = new Platform();
+            platform.getPosition().set(200, platformY);
             GameObject.add(platform);
         }
     }
