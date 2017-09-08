@@ -13,6 +13,7 @@ public class BoxCollider extends GameObject {
     public BoxCollider(float x, float y, float width, float height) {
         super();
         this.position.set(x, y);
+        this.screenPosition.set(x, y);
         this.width = width;
         this.height = height;
     }
