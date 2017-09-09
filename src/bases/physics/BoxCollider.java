@@ -38,6 +38,14 @@ public class BoxCollider extends GameObject {
         return this.screenPosition.y + this.height / 2;
     }
 
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
     public boolean intersects(BoxCollider other) {
         return this.bottom() >= other.top() &&
                 this.top() <= other.bottom() &&
